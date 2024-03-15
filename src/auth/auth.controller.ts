@@ -29,6 +29,12 @@ export class AuthController {
     return this.authService.getAdmins();
   }
 
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  disconnectAdmin(@Res() res: Response) {
+    return this.authService.deleteCookie(res);
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard)
   createAdmin(@Body() registerData: LoginAdminDto, @getJWT() jwt: JwtPayload) {

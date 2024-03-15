@@ -104,6 +104,16 @@ export class AuthService {
       this.handleDBExceptions;
     }
   }
+  deleteCookie(res: Response) {
+    res.cookie(this.cookieName, '', {
+      httpOnly: true,
+      secure: this.enviroment === 'development' ? false : true,
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 0, //
+    });
+    return res.send({ authenticated: false });
+  }
 
   private handleDBExceptions(error: any) {
     this.logger.log(error);
