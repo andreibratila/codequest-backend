@@ -11,11 +11,9 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { Participants } from '../entities/participants.entity';
 import { Prizes } from '../entities/prizes.entity';
 
 import { PrizeDto } from './prize.dto';
-import { ParticipantDto } from './participant.dto';
 
 export class CreateLotteryDto {
   @IsString()
@@ -49,11 +47,6 @@ export class CreateLotteryDto {
   @IsInt()
   @Min(1)
   number_of_winners: number;
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => ParticipantDto)
-  participants: Participants[];
 
   @IsArray()
   @ValidateNested({ each: true })

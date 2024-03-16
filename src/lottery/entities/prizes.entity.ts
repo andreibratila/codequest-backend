@@ -11,7 +11,19 @@ import {
 } from 'sequelize-typescript';
 import { Lottery } from './lottery.entity';
 
-@Table
+@Table({
+  timestamps: true,
+  indexes: [
+    {
+      unique: true,
+      fields: ['lotteryId', 'position'], // Crea un índice único compuesto por lotteryId y position
+    },
+    {
+      unique: true,
+      fields: ['lotteryId', 'winner'],
+    },
+  ],
+})
 export class Prizes extends Model<Prizes> {
   @PrimaryKey
   @Default(DataType.UUIDV4)
@@ -23,8 +35,6 @@ export class Prizes extends Model<Prizes> {
   @Column(DataType.UUID)
   lotteryId: string;
 
-  // Include data to asociated library
-  // TODO: maibe delete
   @BelongsTo(() => Lottery)
   lottery: Lottery;
 
@@ -33,4 +43,7 @@ export class Prizes extends Model<Prizes> {
 
   @Column
   prize: string;
+
+  @Column
+  winner: string;
 }

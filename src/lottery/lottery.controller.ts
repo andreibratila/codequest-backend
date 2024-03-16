@@ -8,11 +8,16 @@ import {
   Delete,
   UseGuards,
   Query,
+  ParseUUIDPipe,
 } from '@nestjs/common';
+
 import { LotteryService } from './lottery.service';
+
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
+
 import { CreateLotteryDto } from './dto/create-lottery.dto';
 import { UpdateLotteryDto } from './dto/update-lottery.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
+import { CreateParticipantDto } from './dto/create-participant.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('lottery')
@@ -35,13 +40,32 @@ export class LotteryController {
     return this.lotteryService.findOne(term);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateLotteryDto: UpdateLotteryDto) {
-  //   return this.lotteryService.update(+id, updateLotteryDto);
-  // }
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateLotteryDto: UpdateLotteryDto,
+  ) {
+    return this.lotteryService.update(id, updateLotteryDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.lotteryService.remove(+id);
-  // }
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.lotteryService.remove(id);
+  }
+
+  @Post('participants/:term')
+  addParticipants(
+    @Param('term') term: string,
+    @Body() addParticipants: CreateParticipantDto,
+  ) {
+    return this.lotteryService.addParticipants(term, addParticipants);
+  }
+
+  @Patch('winner/:id')
+  @UseGuards(JwtAuthGuard)
+  addWinner(@Param('id', ParseUUIDPipe) id: string) {
+    return this.lotteryService.generateWinner(id);
+  }
 }
