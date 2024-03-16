@@ -20,7 +20,6 @@ export class JwtAuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const cookie = request.cookies[this.cookieName];
-
     if (!cookie) {
       throw new UnauthorizedException('Token not found!');
     }

@@ -12,6 +12,8 @@ import { CommonModule } from './common/common.module';
 import { Auth } from './auth/entities/auth.entity';
 import { SeedModule } from './seed/seed.module';
 
+import { Lottery } from './lottery/model/lottery.model';
+import { Prizes } from './prizes/model/prizes.model';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,16 +24,16 @@ import { SeedModule } from './seed/seed.module';
 
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: EnvConfiguration().dbHost,
       port: 5432,
       username: 'postgres',
       password: 'postgres',
       database: 'mydb',
       autoLoadModels: true,
       synchronize: true, // TODO: false in production make validation with env configuration
-      models: [Auth],
+      models: [Auth, Lottery, Prizes],
     }),
-    SequelizeModule.forFeature([]),
+    SequelizeModule.forFeature([Lottery, Prizes]),
 
     AuthModule,
     LotteryModule,

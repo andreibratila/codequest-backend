@@ -1,7 +1,20 @@
-import { Model, Column, Table } from 'sequelize-typescript';
+import {
+  Model,
+  Column,
+  Table,
+  PrimaryKey,
+  Unique,
+  ForeignKey,
+} from 'sequelize-typescript';
+import { Participants } from 'src/participants/model/participants.model';
 
 @Table
 export class Lottery extends Model<Lottery> {
+  @PrimaryKey
+  @Unique
+  @Column
+  id: number;
+
   @Column
   lottery_name: string;
 
@@ -22,4 +35,8 @@ export class Lottery extends Model<Lottery> {
 
   @Column
   number_of_winners: number;
+
+  @Column
+  @ForeignKey(() => Participants)
+  participants: number;
 }
