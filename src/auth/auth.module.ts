@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { SequelizeModule } from '@nestjs/sequelize';
 import { Auth } from './entities/auth.entity';
 
 @Module({
+  controllers: [AuthController],
+  providers: [AuthService],
   imports: [
     SequelizeModule.forFeature([Auth]),
 
@@ -23,7 +25,6 @@ import { Auth } from './entities/auth.entity';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController],
-  providers: [AuthService],
+  exports: [JwtModule],
 })
 export class AuthModule {}

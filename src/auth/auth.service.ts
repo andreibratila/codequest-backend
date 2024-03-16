@@ -101,7 +101,7 @@ export class AuthService {
 
       return userWithoutPassword;
     } catch (error) {
-      this.handleDBExceptions;
+      this.handleDBExceptions(error);
     }
   }
   deleteCookie(res: Response) {
@@ -116,7 +116,8 @@ export class AuthService {
   }
 
   private handleDBExceptions(error: any) {
-    this.logger.log(error);
+    this.logger.log(`Error: ${error.message}\nStack: ${error.stack}`);
+
     throw new InternalServerErrorException('Please check server logs');
   }
 }
