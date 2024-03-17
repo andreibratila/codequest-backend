@@ -14,6 +14,8 @@ import {
 import { Participants } from './participants.entity';
 import { Prizes } from './prizes.entity';
 
+import { randomInt } from 'crypto';
+
 @Table
 export class Lottery extends Model<Lottery> {
   @PrimaryKey
@@ -80,19 +82,22 @@ export class Lottery extends Model<Lottery> {
     if (!instance.slug) {
       instance.slug = instance.lottery_name
         .toLowerCase()
-        .replace(/\s+/g, '_')
+        .replace(/\s+/g, '-')
         .replace(/[^\w-]+/g, '');
+      instance.slug += '-' + randomInt(100, 999).toString();
     }
   }
 
   // Hook beforeUpdate para manejar el slug antes de actualizar
   @BeforeUpdate
   static updateSlug(instance: Lottery) {
-    if (instance.slug) {
-      instance.slug = instance.slug
+    if (instance.changed('lottery_name')) {
+      instance.slug = instance.lottery_name
         .toLowerCase()
-        .replace(/\s+/g, '_')
+        .replace(/\s+/g, '-')
         .replace(/[^\w-]+/g, '');
+
+      instance.slug += '-' + randomInt(100, 999).toString();
     }
   }
 }
