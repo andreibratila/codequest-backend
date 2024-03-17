@@ -19,6 +19,7 @@ import { CreateLotteryDto } from './dto/create-lottery.dto';
 import { UpdateLotteryDto } from './dto/update-lottery.dto';
 import { CreateParticipantDto } from './dto/create-participant.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ChangeWinnerDto } from './dto/change-winner.dto';
 
 @Controller('lottery')
 export class LotteryController {
@@ -65,7 +66,22 @@ export class LotteryController {
 
   @Patch('winner/:id')
   @UseGuards(JwtAuthGuard)
-  addWinner(@Param('id', ParseUUIDPipe) id: string) {
+  generateWinner(@Param('id', ParseUUIDPipe) id: string) {
     return this.lotteryService.generateWinner(id);
+  }
+
+  @Patch('change-winner/:id')
+  @UseGuards(JwtAuthGuard)
+  changeWinner(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() changeWinnerDto: ChangeWinnerDto,
+  ) {
+    return this.lotteryService.changeWinner(id, changeWinnerDto);
+  }
+
+  @Patch('completed-lottery/:id')
+  @UseGuards(JwtAuthGuard)
+  closeLottery(@Param('id', ParseUUIDPipe) id: string) {
+    return this.lotteryService.lotteryFinished(id);
   }
 }

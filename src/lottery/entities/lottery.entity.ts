@@ -47,6 +47,15 @@ export class Lottery extends Model<Lottery> {
   @Column
   public_access: boolean;
 
+  @Default(0)
+  @NotEmpty
+  @Column
+  ammount_participants: number;
+
+  @NotEmpty
+  @Column
+  end_date: string;
+
   @Column
   secret_code: string;
 

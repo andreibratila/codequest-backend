@@ -24,4 +24,8 @@ export const JoiValidationSchema = Joi.object({
   DB_USERNAME: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
   DB_DATABASE: Joi.string().required(),
+
+  // Discord
+  D_BOT_ID: Joi.required(),
+  D_ID_DISCORD_SERVER: Joi.required(),
 });

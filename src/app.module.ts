@@ -14,6 +14,8 @@ import { Auth } from './auth/entities/auth.entity';
 import { Lottery } from './lottery/entities/lottery.entity';
 import { Participants } from './lottery/entities/participants.entity';
 import { Prizes } from './lottery/entities/prizes.entity';
+import { DiscordModule } from '@discord-nestjs/core';
+import { GatewayIntentBits } from 'discord.js';
 
 @Module({
   imports: [
@@ -41,6 +43,17 @@ import { Prizes } from './lottery/entities/prizes.entity';
       inject: [ConfigService],
     }),
     SequelizeModule.forFeature([]),
+
+    DiscordModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        token: configService.get<string>('dBotId'),
+        discordClientOptions: {
+          intents: [GatewayIntentBits.Guilds],
+        },
+      }),
+      inject: [ConfigService],
+    }),
 
     AuthModule,
     CommonModule,

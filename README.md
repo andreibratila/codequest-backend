@@ -32,6 +32,8 @@
 $ npm install
 ```
 
+https://discord.com/oauth2/authorize?client_id=YOUR-CLIENT-ID&permissions=1024&scope=bot IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 ## Running the app
 
 ```bash

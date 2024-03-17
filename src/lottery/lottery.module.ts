@@ -6,6 +6,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Lottery } from './entities/lottery.entity';
 import { Prizes } from './entities/prizes.entity';
 import { Participants } from './entities/participants.entity';
+import { DiscordModule } from '@discord-nestjs/core';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   controllers: [LotteryController],
@@ -13,6 +15,8 @@ import { Participants } from './entities/participants.entity';
   imports: [
     AuthModule,
     SequelizeModule.forFeature([Lottery, Prizes, Participants]),
+    DiscordModule.forFeature(),
+    HttpModule,
   ],
 })
 export class LotteryModule {}

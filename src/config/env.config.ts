@@ -23,4 +23,8 @@ export const EnvConfiguration = () => ({
   dbPassword: process.env.DB_PASSWORD,
   dbDatabase: process.env.DB_DATABASE,
   dbSynchronize: process.env.NODE_ENV === 'production' ? false : true,
+
+  // Discord
+  dBotId: process.env.D_BOT_ID,
+  dIdDiscordServer: process.env.D_ID_DISCORD_SERVER,
 });

@@ -8,6 +8,7 @@ import {
   IsArray,
   ValidateNested,
   ValidateIf,
+  IsDateString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -39,14 +40,13 @@ export class CreateLotteryDto {
   @IsBoolean()
   public_access: boolean;
 
+  @IsDateString()
+  end_date: string;
+
   @ValidateIf((o) => o.public_access === false)
   @IsString()
   @Length(1, 255)
   secret_code?: string;
-
-  @IsInt()
-  @Min(1)
-  number_of_winners: number;
 
   @IsArray()
   @ValidateNested({ each: true })
