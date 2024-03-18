@@ -57,9 +57,7 @@ export class AuthService {
     // Create JWT verificating admin
     const jwt = this.jwtService.sign({ id: userData.id });
     res.cookie(this.cookieName, jwt, {
-      httpOnly: true,
       secure: this.enviroment === 'development' ? false : true,
-      sameSite: 'strict',
       path: '/',
       maxAge: this.cookieExpirationTime,
     });
@@ -89,14 +87,14 @@ export class AuthService {
 
     try {
       // Create user
-      let newUser = await this.authModel.create({
+      const newUser = await this.authModel.create({
         user,
         password: await bcrypt.hashSync(password, 10),
         createdBy: jwt.id,
       });
 
       // Obtener una versión limpia del objeto, excluyendo la contraseña
-      let userWithoutPassword = newUser.get({ plain: true });
+      const userWithoutPassword = newUser.get({ plain: true });
       delete userWithoutPassword.password;
 
       return userWithoutPassword;

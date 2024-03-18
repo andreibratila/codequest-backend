@@ -12,7 +12,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { InjectDiscordClient } from '@discord-nestjs/core';
 
 import { Sequelize } from 'sequelize-typescript';
-import { Order, UniqueConstraintError, Op } from 'sequelize';
+import { Order } from 'sequelize';
 
 import { validate as isUUID } from 'uuid';
 import * as bcrypt from 'bcrypt';
@@ -457,23 +457,19 @@ export class LotteryService {
       throw new UnauthorizedException('The user id dont exists in the server');
     }
     console.log('no hay miembro');
-
-    return;
   }
 
   private handleDBError(error) {
-    if (error instanceof UniqueConstraintError) {
-      if (error.fields && error.fields.slug) {
-        throw new ConflictException('The slug is in use, please select other');
-      }
-      if (error.fields && error.fields.position) {
-        throw new ConflictException('There are 2 prizes with same position');
-      }
-      if (error.fields && error.fields.user_discord) {
-        throw new ConflictException('This user is registered');
-      }
-      throw new ConflictException('A unique constraint violation occurred.');
+    if (error.fields?.slug) {
+      throw new ConflictException('The slug is in use, please select other');
     }
+    if (error.fields?.position) {
+      throw new ConflictException('There are 2 prizes with same position');
+    }
+    if (error.fields?.user_discord) {
+      throw new ConflictException('This user is registered');
+    }
+    throw new ConflictException('A unique constraint violation occurred.');
 
     this.logger.log(`Error: ${error.message}\nStack: ${error.stack}`);
     throw new InternalServerErrorException('See the Lottery Logs');
