@@ -26,13 +26,32 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Create discord Bot
+
+1. register in https://discord.com/developers/applications
+2. Create an aplication
+3. configure the bot with: public bot, SERVER MEMBERS INTENT
+4. copy your discordID server
+5. paste this link in your navigation and sleect your server to activate the bot
+6. https://discord.com/oauth2/authorize?client_id=YOUR-CLIENT-ID&permissions=1024&scope=bot
+
 ## Installation
 
 ```bash
-$ npm install
-```
+# clone repository
+https://github.com/andreibratila/codequest-backend
 
-https://discord.com/oauth2/authorize?client_id=YOUR-CLIENT-ID&permissions=1024&scope=bot IMPORTANTE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# install dependencies
+$ npm install
+
+# rename .env.template by
+cp .env.template .env
+ - Update the '*.env*' file with your environment-specific variables
+
+# set the env variables
+D_BOT_ID=yourprivate_bot_key
+D_ID_DISCORD_SERVER=YourdiscordID
+```
 
 ## Running the app
 
@@ -47,29 +66,12 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+### 🚀 Deployed in <a name="deployed"></a>
 
-```bash
-# unit tests
-$ npm run test
+[Lottery webapp](https://lottery-webapp-seven.vercel.app/)
 
-# e2e tests
-$ npm run test:e2e
+## ⭐Acknowledgements <a name="acknowledgements"></a>
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- ⭐ [Andrei](https://github.com/andreibratila)
+- ⭐ [Kevin](https://github.com/kevin-dev71)
+- ⭐ [Guillermo](https://github.com/Hai5edfm)

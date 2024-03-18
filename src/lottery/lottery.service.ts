@@ -100,6 +100,7 @@ export class LotteryService {
       where: whereCondition,
       include: [this.prizeModel],
       order: [['createdAt', 'DESC']] as Order,
+      distinct: true,
     };
 
     const response = await this.lotteryModel.findAndCountAll(options);
@@ -128,6 +129,13 @@ export class LotteryService {
 
     if (!lottery) {
       throw new NotFoundException(`Lottery not found with slug '${term}'`);
+    }
+
+    // Verify if the countdown finished
+    const deadline = new Date(lottery.end_date);
+    const now = new Date();
+    if (deadline < now) {
+      this.generateWinner(lottery.id);
     }
 
     return lottery;
